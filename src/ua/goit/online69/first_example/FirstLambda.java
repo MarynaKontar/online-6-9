@@ -26,9 +26,11 @@ public class FirstLambda {
     private interface A {
         int method(int values);
     }
-
     // And lambda type of it looks like.
     private A lambda2 = x -> x * x;
+    // 1. Lambda?
+    // 2. return int, param size 1, int
+    // 3. 'method' -> 2.
     // This is examcty same as, but less code.x
     private A lambda3 = new A() {
         @Override
@@ -58,6 +60,7 @@ public class FirstLambda {
         Collection<Integer> initial = Arrays.asList(-1, -2, 0, 1, 2, 3);
         System.out.println(filterNumbers(initial, x -> x < 0));
         System.out.println(filterNumbers(initial, x -> x >= 0));
+        System.out.println(filterNumbers(initial, x -> x % 2 == 0));
     }
 
     // Write method which is filter elements

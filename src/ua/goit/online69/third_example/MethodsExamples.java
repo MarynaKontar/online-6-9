@@ -2,6 +2,7 @@ package ua.goit.online69.third_example;
 
 import java.util.Random;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Example for methods.
@@ -19,6 +20,13 @@ public class MethodsExamples {
             return value * value;
         }
     }
+
+//    static class B implements A {
+//        @Override
+//        public int someMethod(int value) {
+//            return 0;
+//        }
+//    }
 
     // Yes, it breaks abstraction in some cases but in Oracle do not care..
     // One of possible options to use.

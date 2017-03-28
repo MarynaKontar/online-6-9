@@ -35,7 +35,7 @@ public class MoreComplexExamples {
         Arrays.sort(array, (a, b) -> -Integer.compare(a, b));
         System.out.println(Arrays.toString(array));
         // Visibility. Inside lambla you can access local variables and class elements.
-        // Local variables must be exclusively final: not change its reference value.
+        // Local variables must be effectively final: not change its reference value.
         int a = 20;
         Function<Integer, Integer> multi = x -> a * x;
         // But if java will know that a might change state - it wont compile.
@@ -43,7 +43,7 @@ public class MoreComplexExamples {
         // You cannot shade variable as it possible for anonymous classes lambda variables visibility is same
         // as method or class or place where you call it.
         //int x = 10;
-        //Function<Integer, Integer> multi2 = x -> a * x;
+        //Function<Integer, Integer> multi2 = x -> a * x
         int x = 10;
         Function<Integer, Integer> multi3 = new Function<Integer, Integer>() {
             @Override
@@ -63,4 +63,9 @@ public class MoreComplexExamples {
         }
         return result;
     }
+
+    private interface Functionary {
+        BinaryOperator<Integer> method(Integer v);
+    }
+    Functionary f = x -> (a, b) -> x * a * b;
 }
