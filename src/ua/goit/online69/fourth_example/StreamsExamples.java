@@ -4,9 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -46,19 +50,23 @@ public class StreamsExamples {
         System.out.println(first.isPresent());
         // When you call get and there is inside null - you will receive NPE.
         System.out.println(first.get());
+        //String a = null;
+        //Object b = Optional.ofNullable(a).orElse("de");
         // As I said streams are single-shot
         // Another invocation will give you java.lang.IllegalStateException: stream has already been operated upon or closed
         // Select only odd elements and collect them into some list.
         List<Integer> odds = list.stream().filter(i -> i % 2 == 1).collect(Collectors.toList());
         System.out.println(odds);
         // Now collect all elements that are odd and bigger then 4
+        Predicate<Integer> oddOr = i -> i % 2 == 1;
+        oddOr = oddOr.or(i -> i < 4);
         odds = list.stream().filter(i -> i % 2 == 1).filter(i -> i > 4).collect(Collectors.toList());
         System.out.println(odds);
         // Now collect all elements that are odd and bigger then 4 and convert them into Strings
-        List<String> oddStr = list.stream().filter(i -> i % 2 == 1).filter(i -> i > 4).map(i -> i.toString()).collect(Collectors.toList());
+        List<String> oddStr = list.stream().filter(i -> i % 2 == 1).filter(i -> i > 4).map(i -> "Test number:" + i).collect(Collectors.toList());
         System.out.println(oddStr);
         // And now I want to combine them into 1 line
-        String out = list.stream().filter(i -> i % 2 == 1).filter(i -> i > 4).map(i -> i.toString()).collect(Collectors.joining(","));
+        String out = list.stream().filter(i -> i % 2 == 1).filter(i -> i > 4).map(i -> "Test number:" + i).collect(Collectors.joining(","));
         System.out.println(out);
         // How to find is element exists in collection?
         int element = 7;
@@ -85,7 +93,7 @@ public class StreamsExamples {
         limited = list.stream().sorted((a, b) -> -a.compareTo(b)).limit(3).collect(Collectors.toList());
         System.out.println(limited);
         // You can collect data into other collections: set, lists
-        Set<Integer> set = list.stream().limit(3).collect(Collectors.toSet());
+        Set<Integer> set = list.stream().limit(3).collect(Collectors.toCollection(TreeSet::new));
         System.out.println(set);
         // Special streams exists for primitives: IntStream, LongStream, DoubleStream...
         // For example we want to generate collection of 5 elements
@@ -95,6 +103,19 @@ public class StreamsExamples {
         System.out.println(grouped);
         //
         // And many, many, many more opportunities...
+        Random random = new Random();
+        IntStream stream1 = random.ints(10);
+        //
+        int[] a = {1, 2, 3};
+        IntStream intA = Arrays.stream(a);
+        int[] b = {4, 5, 6};
+        IntStream intB = Arrays.stream(b);
+        //
+        Stream<Integer> c = Stream.concat(intA.boxed(), intB.boxed());
+        Stream<Long> infinite = Stream.generate(random::nextLong).limit(10);
+        infinite.forEach(i -> System.out.println(i));
+        //
+        LongStream longStream = infinite.mapToLong(Long::longValue);
     }
 
     private static class A {
