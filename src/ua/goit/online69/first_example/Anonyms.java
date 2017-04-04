@@ -3,9 +3,6 @@ package ua.goit.online69.first_example;
 import java.util.Comparator;
 import java.util.function.Function;
 
-/**
- * Created by andreymi on 3/28/2017.
- */
 public class Anonyms {
     interface A {
         void doit(int i);
