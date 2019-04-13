@@ -3,6 +3,7 @@ package ua.goit.online69.first_example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -58,19 +59,41 @@ public class FirstLambda {
         Predicate<Integer> negativeNumbers = x -> x < 0;
         // Example to usage with different filters.
         Collection<Integer> initial = Arrays.asList(-1, -2, 0, 1, 2, 3);
-        System.out.println(filterNumbers(initial, x -> x < 0));
+        System.out.println(filterNumbers(initial, negativeNumbers));
         System.out.println(filterNumbers(initial, x -> x >= 0));
         System.out.println(filterNumbers(initial, x -> x % 2 == 0));
+
+       //CONSUMER
+        Consumer<String> print = x -> System.out.println(x + " consumer");
+        Collection<String> strings = Arrays.asList("qw", "ergbdf", "tryythgcd");
+        strings.forEach(print);
+
+        //FUNCTION
+        Collection<String> result = new ArrayList<>();
+        Function<Integer, String> function = x -> {
+            int t = x*x;
+           return String.valueOf(t);};
+        initial.forEach(x -> {
+            result.add(function.apply(x));
+            System.out.println(result);
+        });
+        System.out.println(result);
+
     }
 
     // Write method which is filter elements
     private static Collection<Integer> filterNumbers(Collection<Integer> collection, Predicate<Integer> predicate) {
         Collection<Integer> result = new ArrayList<>();
-        for (Integer e : collection) {
-            if (predicate.test(e)) {
-                result.add(e);
+        collection.forEach(x -> {
+            if (predicate.test(x)) {
+                result.add(x);
             }
-        }
+        });
+//        for (Integer e : collection) {
+//            if (predicate.test(e)) {
+//                result.add(e);
+//            }
+//        }
         return result;
     }
 }
